@@ -1,4 +1,57 @@
+function updateNav() {
+    const nav = document.getElementById('nav-buttons');
+    nav.innerHTML = ''; // очистим
+
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const username = localStorage.getItem('username') || 'Пользователь';
+
+    if (isLoggedIn) {
+        // Кнопка "История"
+        const historyBtn = document.createElement('button');
+        historyBtn.className = 'btn btn-secondary';
+        historyBtn.textContent = 'История';
+        historyBtn.onclick = () => alert('Пока нет истории 😅');
+        nav.appendChild(historyBtn);
+
+        // Подпись с ником
+        const userLabel = document.createElement('span');
+        userLabel.textContent = username;
+        userLabel.style.marginLeft = '1rem';
+        userLabel.style.fontWeight = 'bold';
+        userLabel.style.color = '#ccc';
+        nav.appendChild(userLabel);
+
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'btn btn-secondary';
+        logoutBtn.textContent = 'Выйти';
+        logoutBtn.style.marginLeft = '1rem';
+        logoutBtn.onclick = () => {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            updateNav();
+        };
+        nav.appendChild(logoutBtn);
+
+    } else {
+        // Кнопка "Войти"
+        const loginBtn = document.createElement('button');
+        loginBtn.className = 'btn btn-secondary';
+        loginBtn.textContent = 'Войти';
+        loginBtn.onclick = () => window.location.href = 'login.html';
+        nav.appendChild(loginBtn);
+
+        // Кнопка "Регистрация"
+        const registerBtn = document.createElement('button');
+        registerBtn.className = 'btn btn-primary';
+        registerBtn.textContent = 'Регистрация';
+        registerBtn.onclick = () => window.location.href = 'register.html';
+        nav.appendChild(registerBtn);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    updateNav();
+
     // Находим все нужные элементы на странице
     const searchForm = document.getElementById('search-form');
     const songInput = document.getElementById('song-input');
