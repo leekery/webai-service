@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuzRec - Рекомендации музыки</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">MuzRec 🎶</a>
+                <nav class="main-nav">
+                    <button type="button" class="btn btn-secondary">Войти</button>
+                    <button type="button" class="btn btn-primary">Регистрация</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="search-section">
+                <h1>Откройте для себя новую музыку</h1>
+                <p>Введите название любимого трека, и наш ИИ подберет для вас что-то похожее.</p>
+                
+                <form id="search-form" class="search-form">
+                    <input type="text" id="song-input" placeholder="Например, Smells Like Teen Spirit" required>
+                    <button type="submit" id="search-button" class="btn btn-primary">Найти</button>
+                </form>
+            </section>
+
+            <section id="results-container" class="results-container hidden">
+                <h2>Вот что мы рекомендуем:</h2>
+                <div id="loader" class="loader hidden"></div>
+                <div id="recommendations-list">
+                    </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 M3O-232Б-23</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
