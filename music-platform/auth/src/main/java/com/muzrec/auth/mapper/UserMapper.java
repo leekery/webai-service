@@ -6,8 +6,9 @@ import com.muzrec.auth.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
     User toUser(UserRegisterDto dto);

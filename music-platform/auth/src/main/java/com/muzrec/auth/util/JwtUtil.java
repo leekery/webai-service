@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,18 +15,21 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    public static final String SECRET_KEY = "code";
-    public static final Long TOKEN_VALID_PERIOD = 36_000_000L;
+    @Value("${jwt.secret}")
+    public String secret;
+
+    @Value("${jwt.expiration}")
+    public Long validTokenPeriod;
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALID_PERIOD))
+                .setExpiration(new Date(System.currentTimeMillis() + validTokenPeriod))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
