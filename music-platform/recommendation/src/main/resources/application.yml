@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: recommendation
+
+server:
+  port: 8082
+
+ai-service:
+  url: ${AI_SERVICE_URL} # Сюда пишешь свой адрес Python-сервиса
+
+logging:
+  level:
+    root: INFO
+    com.muzrec: DEBUG
