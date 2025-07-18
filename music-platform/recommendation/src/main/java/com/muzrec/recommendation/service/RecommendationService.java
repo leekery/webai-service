@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class RecommendationService {
 
     private final WebClient client;
 
-    public List<SongDto> getRecommendations(String trackName) throws RuntimeException {
+    public Mono<List<SongDto>> getRecommendations(String trackName) throws RuntimeException {
         try {
             log.info("Получаем данные с AI сервиса");
             return client.get()
@@ -25,8 +26,7 @@ public class RecommendationService {
                             .build())
                     .retrieve()
                     .bodyToFlux(SongDto.class)
-                    .collectList()
-                    .block();
+                    .collectList();
         } catch (AiServiceException e) {
             throw new AiServiceException("Сервис рекомендаций недоступен");
         }
