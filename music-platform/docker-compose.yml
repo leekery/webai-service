@@ -1,18 +1,24 @@
 version: '3.8'
 
 services:
+  eureka:
+    build: eureka
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+
   auth:
     build: auth
     container_name: auth-service
     ports:
       - "8081:8081"
     environment:
+      - SPRING_CLOUD_DISCOVERY_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=prod
-      - JWT_SECRET= # Сюда сгенерированный токен
+      - JWT_SECRET=8b5955d09b37422109c658f4c4059d9c5da7843705475eefe3856815f476f2c2 # Сюда сгенерированный токен
     depends_on:
       - postgres-auth
-  #    networks:
-#      - muzrec-network
+      - eureka
 
   postgres-auth:
     image: postgres:16
@@ -29,10 +35,11 @@ services:
     ports:
       - "8082:8082"
     environment:
+      - SPRING_CLOUD_DISCOVERY_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=prod
       - AI_SERVICE_URL= # Сюда url АИшки
-#    networks:
-#      - muzrec-network
+    depends_on:
+      - eureka
 
   gateway:
     build: gateway
@@ -40,13 +47,9 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - SPRING_CLOUD_DISCOVERY_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=prod
-      - JWT_SECRET= # Сюда сгенерированный токен
+      - JWT_SECRET=8b5955d09b37422109c658f4c4059d9c5da7843705475eefe3856815f476f2c2 # Сюда сгенерированный токен
     depends_on:
       - auth
       - recommendation
-#    networks:
-#      - muzrec-network
-
-#  networks:
-#    muzrec-network.driver: bridge

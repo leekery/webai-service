@@ -14,9 +14,10 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/api/auth/**").permitAll()
+                        .pathMatchers("/api/recommendation").permitAll()
+                        .pathMatchers("/api/recommendation?**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .build();
     }
-
 }
