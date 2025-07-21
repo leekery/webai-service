@@ -15,7 +15,6 @@ services:
     environment:
       - SPRING_CLOUD_DISCOVERY_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=prod
-      - JWT_SECRET=8b5955d09b37422109c658f4c4059d9c5da7843705475eefe3856815f476f2c2 # Сюда сгенерированный токен
     depends_on:
       - postgres-auth
       - eureka
@@ -29,6 +28,16 @@ services:
     ports:
       - "5432:5432"
 
+  recommendation-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: recommendation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5433"
+
+
   recommendation:
     build: recommendation
     container_name: recommendation-service
@@ -40,6 +49,7 @@ services:
       - AI_SERVICE_URL= # Сюда url АИшки
     depends_on:
       - eureka
+      - recommendation-db
 
   gateway:
     build: gateway

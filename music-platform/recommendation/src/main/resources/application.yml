@@ -2,6 +2,21 @@ spring:
   application:
     name: recommendation
 
+  r2dbc:
+    url: r2dbc:postgresql://postgres-recommendation:5433/recommendation
+    username: postgres
+    password: postgres
+
+    sql:
+      init:
+        mode: always
+
+    datasource: # Только если используешь Flyway или Liquibase для схемы
+      driver-class-name: org.postgresql.Driver
+
+    flyway:
+      enabled: false
+
 server:
   port: 8082
 
