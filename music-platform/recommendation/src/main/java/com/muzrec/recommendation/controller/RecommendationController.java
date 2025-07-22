@@ -27,11 +27,11 @@ public class RecommendationController {
 
     @PostMapping("/history")
     @ResponseStatus(HttpStatus.OK)
-    public void saveHistory(@RequestParam String trackName,
+    public Mono<Void> saveHistory(@RequestParam String trackName,
                             @RequestHeader("X-User-Login") String login,
                             @RequestBody List<String> recommendedTracks) {
         log.info("Запрос на сохранение истории по треку {}, для пользователя {}", trackName, login);
-        service.saveRecommendationHistory(login, trackName, recommendedTracks);
+        return service.saveRecommendationHistory(login, trackName, recommendedTracks);
     }
 
     @GetMapping("/history")

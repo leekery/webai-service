@@ -38,24 +38,23 @@ public class RecommendationService {
         }
     }
 
-    public void saveRecommendationHistory(String userId, String trackName, List<String> recommendedTracks) {
+    public Mono<Void> saveRecommendationHistory(String login, String trackName, List<String> recommendedTracks) {
         RecommendationHistory history = new RecommendationHistory(
-                null,
-                userId,
+                login,
                 trackName,
                 recommendedTracks,
                 LocalDateTime.now()
         );
-        repository.save(history).then();
-        log.info("История сохранена");
+        log.info("Сохраняем историю для пользователя {}", login);
+        return repository.save(history).then();
     }
 
-    public Flux<RecommendationHistoryDto> getHistory(String userId) {
-        log.info("Получение истории для пользователя {}", userId);
-        return repository.findAllByUserId(userId)
+    public Flux<RecommendationHistoryDto> getHistory(String login) {
+        log.info("Получение истории для пользователя {}", login);
+        return repository.findAllByLogin(login)
                 .map(entity -> new RecommendationHistoryDto(
-                        entity.getUserId(),
-                        entity.getTrackId(),
+                        entity.getLogin(),
+                        entity.getTrack(),
                         entity.getRecommendedTrackIds(),
                         entity.getCreatedAt()
                 ));

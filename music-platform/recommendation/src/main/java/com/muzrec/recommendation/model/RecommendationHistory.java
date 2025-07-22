@@ -2,7 +2,6 @@ package com.muzrec.recommendation.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -14,19 +13,15 @@ import java.util.List;
 @Table("recommendation_history")
 public class RecommendationHistory {
 
-    @Id
-    private Long id;
-    private String userId;
-    private String trackId;
-
+    private String login;
+    private String track;
     @Column("recommended_track_ids")
     private List<String> recommendedTrackIds;
     private LocalDateTime createdAt;
 
-    public RecommendationHistory(Long id, String userId, String trackId, List<String> recommendedTrackIds, LocalDateTime createdAt) {
-        this.id = id;
-        this.userId = userId;
-        this.trackId = trackId;
+    public RecommendationHistory(String login, String track, List<String> recommendedTrackIds, LocalDateTime createdAt) {
+        this.login = login;
+        this.track = track;
         this.recommendedTrackIds = recommendedTrackIds;
         this.createdAt = createdAt;
     }

@@ -10,13 +10,13 @@ import java.util.List;
 @Setter
 public class RecommendationHistoryDto {
 
-    private String userId;
+    private String login;
     private String trackId;
     private List<String> recommendedTrackIds;
     private LocalDateTime createdAt;
 
-    public RecommendationHistoryDto(String userId, String trackId, List<String> recommendedTrackIds, LocalDateTime createdAt) {
-        this.userId = userId;
+    public RecommendationHistoryDto(String login, String trackId, List<String> recommendedTrackIds, LocalDateTime createdAt) {
+        this.login = login;
         this.trackId = trackId;
         this.recommendedTrackIds = recommendedTrackIds;
         this.createdAt = createdAt;

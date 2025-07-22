@@ -3,16 +3,14 @@ spring:
     name: recommendation
 
   r2dbc:
-    url: r2dbc:postgresql://postgres-recommendation:5433/recommendation
+    url: r2dbc:postgresql://postgres-recommendation:5432/recommendation_db
     username: postgres
     password: postgres
+    initialization-mode: always
 
-    sql:
-      init:
-        mode: always
-
-    datasource: # Только если используешь Flyway или Liquibase для схемы
-      driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
 
     flyway:
       enabled: false
@@ -30,5 +28,6 @@ ai-service:
 
 logging:
   level:
+    org.postgres: DEBUG
     root: INFO
     com.muzrec: DEBUG
